@@ -72,6 +72,7 @@ namespace AstarAlgo.Class
                 for (int y = 0; y < Height; y++)
                 {
                     Nodes[x, y] = new Node(new Position(x, y), this);
+                    Nodes[x, y].End = EndingNode;
                 }
             }
             Nodes[StartingNode.X, StartingNode.Y].IsStart = true;

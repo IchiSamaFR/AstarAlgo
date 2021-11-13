@@ -43,7 +43,12 @@ namespace AstarAlgo.Class
 
         public void SetCost(int gcost, Position end)
         {
-            if (isWall) return;
+            if (isWall)
+            {
+                Gcost = -1;
+                Hcost = -1;
+                return;
+            }
 
             Gcost = gcost;
             End = end;

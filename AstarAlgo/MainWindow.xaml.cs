@@ -1,4 +1,5 @@
 ﻿using AstarAlgo.Class;
+using AstarAlgo.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace AstarAlgo
 {
@@ -22,69 +24,87 @@ namespace AstarAlgo
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static PathFinder pathFinder = new PathFinder(10, 10);
-        private static Timer timer = null;
+        public NodeView[,] Nodes = new NodeView[10, 10];
+        public PathFinder pathFinder = new PathFinder(10, 10);
+        private DispatcherTimer timer = new DispatcherTimer();
 
         public MainWindow()
         {
             InitializeComponent();
 
             Start();
-            timer = new Timer(Update, null, 0, 100);
-            Console.ReadLine();
         }
-        private static void Start()
+        private void Start()
+        {
+            /*
+            ShowMap();
+            pathFinder.SelectNextNode();
+            */
+            GenMap();
+            timer.Tick += new EventHandler(Update);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+            timer.Start();
+        }
+
+        private void Update(object sender, EventArgs e)
         {
             ShowMap();
-            SelectNextNode();
+            pathFinder.SelectNextNode();
         }
 
-        private static void Update(Object o)
+        private void GenMap()
         {
-            ShowMap();
-            SelectNextNode();
+            for (int y = 0; y < pathFinder.Height; y++)
+            {
+                for (int x = 0; x < pathFinder.Width; x++)
+                {
+                    Nodes[x, y] = new NodeView();
+                    Nodes[x, y].Margin = new Thickness(x * 82, y * 82, 0, 0);
+                    gridView.Children.Add(Nodes[x, y]);
+                }
+            }
         }
-
-        private static void ShowMap()
+        private void ShowMap()
         {
-
             for (int y = 0; y < pathFinder.Height; y++)
             {
                 string line = string.Empty;
                 for (int x = 0; x < pathFinder.Width; x++)
                 {
+                    Nodes[x, y].Gvalue.Text = pathFinder.Nodes[x, pathFinder.Height - y - 1].Gcost.ToString();
+                    Nodes[x, y].Hvalue.Text = pathFinder.Nodes[x, pathFinder.Height - y - 1].Hcost.ToString();
+                    Nodes[x, y].Fvalue.Text = pathFinder.Nodes[x, pathFinder.Height - y - 1].Fcost.ToString();
                     if (pathFinder.Nodes[x, pathFinder.Height - y - 1].IsEnd)
                     {
-                        line += "E";
+                        Nodes[x, y].background.Fill = (Brush)(new BrushConverter().ConvertFrom("#00F"));
                     }
                     else if (pathFinder.Nodes[x, pathFinder.Height - y - 1].IsStart)
                     {
-                        line += "S";
+                        Nodes[x, y].background.Fill = (Brush)(new BrushConverter().ConvertFrom("#F00"));
                     }
                     else if (pathFinder.Nodes[x, pathFinder.Height - y - 1].isEndPath)
                     {
-                        line += "¤";
+                        Nodes[x, y].background.Fill = (Brush)(new BrushConverter().ConvertFrom("#0F0"));
                     }
-                    else if (pathFinder.Nodes[x, pathFinder.Height - y - 1].Gcost > -1)
+                    else if (pathFinder.Nodes[x, pathFinder.Height - y - 1].isChecked)
                     {
-                        line += "_";
+                        Nodes[x, y].background.Fill = (Brush)(new BrushConverter().ConvertFrom("#DDD"));
+                    }
+                    else if (pathFinder.Nodes[x, pathFinder.Height - y - 1].Gcost > 0)
+                    {
+                        Nodes[x, y].background.Fill = (Brush)(new BrushConverter().ConvertFrom("#AAA"));
                     }
                     else if (pathFinder.Nodes[x, pathFinder.Height - y - 1].isWall)
                     {
-                        line += "█";
+                        Nodes[x, y].background.Fill = (Brush)(new BrushConverter().ConvertFrom("#000"));
                     }
                     else
                     {
-                        line += ".";
+                        Nodes[x, y].background.Fill = (Brush)(new BrushConverter().ConvertFrom("#EEE"));
                     }
                 }
                 Console.WriteLine(line);
             }
-        }
-
-        private static void SelectNextNode()
-        {
-            pathFinder.SelectNextNode();
         }
     }
 }
