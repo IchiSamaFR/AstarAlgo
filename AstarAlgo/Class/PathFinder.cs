@@ -10,11 +10,11 @@ namespace AstarAlgo.Class
     {
         public Node[,] Nodes;
 
-        public bool IsEnd;
+        public bool PathFind;
 
         public int Width;
         public int Height;
-
+        
         public Position StartingNode;
         public Position EndingNode;
 
@@ -46,22 +46,28 @@ namespace AstarAlgo.Class
 
         public void SelectNextNode()
         {
-            if (IsEnd) return;
-
-            Console.WriteLine(Nodes[StartingNode.X, StartingNode.Y].Pos.X + " - " + Nodes[StartingNode.X, StartingNode.Y].Pos.Y);
+            if (PathFind) return;
+            
             Node nodeToSelect = null;
             int count = 0;
             foreach (var node in Nodes)
             {
-                if (!node.isWall && !node.isChecked && (nodeToSelect == null || (node.Fcost < nodeToSelect.Fcost && node.Fcost > 0)))
+                if (!node.isWall && !node.isChecked && (nodeToSelect == null || node.Fcost < nodeToSelect.Fcost) && node.Fcost > 0)
                 {
                     nodeToSelect = node;
-                    Console.WriteLine(node.Pos.X + " - " + node.Pos.Y + "   F : " + nodeToSelect.Fcost);
                 }
                 count++;
             }
-            Console.WriteLine("Selected : " + nodeToSelect.Pos.X + " - " + nodeToSelect.Pos.Y);
-            nodeToSelect.Select();
+            if(nodeToSelect != null)
+            {
+                Console.WriteLine(nodeToSelect.Pos.X + " " + nodeToSelect.Pos.Y);
+                Console.WriteLine(nodeToSelect.Fcost);
+                nodeToSelect.Select();
+            }
+            else
+            {
+                Console.WriteLine("Impossible");
+            }
         }
 
         private void GenNodes()
@@ -80,9 +86,17 @@ namespace AstarAlgo.Class
         }
         private void GenWall()
         {
+            Nodes[0, 6].isWall = true;
+            Nodes[1, 6].isWall = true;
+            Nodes[2, 6].isWall = true;
+
+            Nodes[4, 5].isWall = true;
+            Nodes[4, 6].isWall = true;
+            Nodes[4, 7].isWall = true;
+            Nodes[4, 8].isWall = true;
+
             Nodes[1, 4].isWall = true;
             Nodes[2, 4].isWall = true;
-            Nodes[3, 4].isWall = true;
             Nodes[4, 4].isWall = true;
             Nodes[5, 4].isWall = true;
             Nodes[6, 4].isWall = true;

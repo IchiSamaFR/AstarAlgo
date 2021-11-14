@@ -42,7 +42,7 @@ namespace AstarAlgo
             */
             GenMap();
             timer.Tick += new EventHandler(Update);
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 10);
             timer.Start();
         }
 
@@ -103,7 +103,6 @@ namespace AstarAlgo
                         Nodes[x, y].background.Fill = (Brush)(new BrushConverter().ConvertFrom("#EEE"));
                     }
                 }
-                Console.WriteLine(line);
             }
         }
     }
