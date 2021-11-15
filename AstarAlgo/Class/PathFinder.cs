@@ -107,6 +107,18 @@ namespace AstarAlgo.Class
         {
             List<Node> nodes = new List<Node>();
 
+            
+            if(GetNode(pos.X + 1, pos.Y) != null)
+                nodes.Add(GetNode(pos.X + 1, pos.Y));
+            if (GetNode(pos.X - 1, pos.Y) != null)
+                nodes.Add(GetNode(pos.X + 1, pos.Y));
+
+            if (GetNode(pos.X, pos.Y + 1) != null)
+                nodes.Add(GetNode(pos.X, pos.Y + 1));
+            if (GetNode(pos.X, pos.Y - 1) != null)
+                nodes.Add(GetNode(pos.X, pos.Y - 1));
+            
+            /*
             for (int x = pos.X - 1; x <= pos.X + 1; x++)
             {
                 for (int y = pos.Y - 1; y <= pos.Y + 1; y++)
@@ -119,6 +131,7 @@ namespace AstarAlgo.Class
                     }
                 }
             }
+            */
 
             return nodes;
         }
