@@ -1,4 +1,4 @@
 # Informations
-A* algorithm, developed with C# with .NET
+A* algorithm, developed in C# with .NET
 
 ![Alt Text](Readme/Animation.gif)
