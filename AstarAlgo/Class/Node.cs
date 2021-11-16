@@ -100,7 +100,7 @@ namespace AstarAlgo.Class
                 else
                     newGCost = Gcost + 10;
 
-                if (nodes[i].Gcost == -1 || nodes[i].Previous?.Gcost > newGCost)
+                if (nodes[i].Gcost == -1 || nodes[i]?.Gcost > newGCost)
                 {
                     nodes[i].Previous = this;
                     nodes[i].SetCost(newGCost, End);

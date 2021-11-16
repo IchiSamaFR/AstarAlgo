@@ -22,10 +22,8 @@ namespace AstarAlgo.Class
         {
             Width = width;
             Height = height;
-            //StartingNode = new Position(5, 3);
-            EndingNode = new Position(5, 3);
-            //EndingNode = new Position(width - 1, height - 1);
-            StartingNode = new Position(width - 1, height - 1);
+            StartingNode = new Position(0, 0);
+            EndingNode = new Position(width - 1, height - 1);
             GenNodes();
             Start();
         }
@@ -88,22 +86,14 @@ namespace AstarAlgo.Class
         }
         private void GenWall()
         {
-            Nodes[0, 6].isWall = true;
-            Nodes[1, 6].isWall = true;
-            Nodes[2, 6].isWall = true;
 
-            Nodes[4, 5].isWall = true;
             Nodes[4, 6].isWall = true;
-            Nodes[4, 7].isWall = true;
-            Nodes[4, 8].isWall = true;
+            Nodes[5, 6].isWall = true;
+            Nodes[6, 6].isWall = true;
+            Nodes[7, 6].isWall = true;
 
-            Nodes[1, 4].isWall = true;
-            Nodes[2, 4].isWall = true;
-            Nodes[4, 4].isWall = true;
-            Nodes[5, 4].isWall = true;
-            Nodes[6, 4].isWall = true;
+            Nodes[7, 5].isWall = true;
             Nodes[7, 4].isWall = true;
-
             Nodes[7, 3].isWall = true;
             Nodes[7, 2].isWall = true;
             Nodes[7, 1].isWall = true;
