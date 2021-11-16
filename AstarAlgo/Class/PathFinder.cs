@@ -22,8 +22,10 @@ namespace AstarAlgo.Class
         {
             Width = width;
             Height = height;
-            StartingNode = new Position(0, 0);
-            EndingNode = new Position(width - 1, height - 1);
+            //StartingNode = new Position(5, 3);
+            EndingNode = new Position(5, 3);
+            //EndingNode = new Position(width - 1, height - 1);
+            StartingNode = new Position(width - 1, height - 1);
             GenNodes();
             Start();
         }
@@ -101,24 +103,29 @@ namespace AstarAlgo.Class
             Nodes[5, 4].isWall = true;
             Nodes[6, 4].isWall = true;
             Nodes[7, 4].isWall = true;
+
+            Nodes[7, 3].isWall = true;
+            Nodes[7, 2].isWall = true;
+            Nodes[7, 1].isWall = true;
         }
 
         public List<Node> GetNodesAround(Position pos)
         {
             List<Node> nodes = new List<Node>();
 
-            
+
+            /*
             if(GetNode(pos.X + 1, pos.Y) != null)
                 nodes.Add(GetNode(pos.X + 1, pos.Y));
             if (GetNode(pos.X - 1, pos.Y) != null)
-                nodes.Add(GetNode(pos.X + 1, pos.Y));
+                nodes.Add(GetNode(pos.X - 1, pos.Y));
 
             if (GetNode(pos.X, pos.Y + 1) != null)
                 nodes.Add(GetNode(pos.X, pos.Y + 1));
             if (GetNode(pos.X, pos.Y - 1) != null)
                 nodes.Add(GetNode(pos.X, pos.Y - 1));
-            
-            /*
+            */
+
             for (int x = pos.X - 1; x <= pos.X + 1; x++)
             {
                 for (int y = pos.Y - 1; y <= pos.Y + 1; y++)
@@ -131,7 +138,6 @@ namespace AstarAlgo.Class
                     }
                 }
             }
-            */
 
             return nodes;
         }

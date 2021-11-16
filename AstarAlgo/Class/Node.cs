@@ -95,7 +95,7 @@ namespace AstarAlgo.Class
             for (int i = 0; i < nodes.Count; i++)
             {
                 int newGCost = 0;
-                if (nodes[i].Pos.X != Pos.X && nodes[i].Pos.X != Pos.Y)
+                if (nodes[i].Pos.X != Pos.X && nodes[i].Pos.Y != Pos.Y)
                     newGCost = Gcost + 14;
                 else
                     newGCost = Gcost + 10;
