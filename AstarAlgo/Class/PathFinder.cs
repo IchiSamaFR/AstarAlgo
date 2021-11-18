@@ -24,7 +24,6 @@ namespace AstarAlgo.Class
             Height = height;
             StartingNode = new Position(0, 0);
             EndingNode = new Position(width - 1, height - 1);
-            GenNodes();
             Start();
         }
 
@@ -39,9 +38,9 @@ namespace AstarAlgo.Class
 
         private void Start()
         {
-            GenNodes();
+            GenNodes(Width, Height);
+            GenPoints(StartingNode, EndingNode);
             GenWall();
-            Nodes[StartingNode.X, StartingNode.Y].SetCost(0, EndingNode);
         }
 
         public void SelectNextNode()
@@ -49,54 +48,57 @@ namespace AstarAlgo.Class
             if (PathFind) return;
             
             Node nodeToSelect = null;
-            int count = 0;
             foreach (var node in Nodes)
             {
                 if (!node.isWall && !node.isChecked && (nodeToSelect == null || node.Fcost < nodeToSelect.Fcost) && node.Fcost > 0)
                 {
                     nodeToSelect = node;
                 }
-                count++;
             }
-            if(nodeToSelect != null)
-            {
-                Console.WriteLine(nodeToSelect.Pos.X + " " + nodeToSelect.Pos.Y);
-                Console.WriteLine(nodeToSelect.Fcost);
+            if (nodeToSelect != null)
                 nodeToSelect.Select();
-            }
             else
-            {
-                Console.WriteLine("Impossible");
-            }
+                PathFind = true;
         }
 
-        private void GenNodes()
+        public void Reset()
         {
-            Nodes = new Node[Width, Height];
-            for (int x = 0; x < Width; x++)
+            foreach (var item in Nodes)
             {
-                for (int y = 0; y < Height; y++)
+                item.ResetValues();
+            }
+            GenPoints(StartingNode, EndingNode);
+            PathFind = false;
+        }
+
+        private void GenNodes(int width, int height)
+        {
+            Nodes = new Node[width, height];
+            for (int x = 0; x < width; x++)
+            {
+                for (int y = 0; y < height; y++)
                 {
                     Nodes[x, y] = new Node(new Position(x, y), this);
-                    Nodes[x, y].End = EndingNode;
+                    Nodes[x, y].EndNodePos = EndingNode;
                 }
             }
-            Nodes[StartingNode.X, StartingNode.Y].IsStart = true;
-            Nodes[EndingNode.X, EndingNode.Y].IsEnd = true;
         }
         private void GenWall()
         {
 
-            Nodes[4, 6].isWall = true;
             Nodes[5, 6].isWall = true;
             Nodes[6, 6].isWall = true;
+
             Nodes[7, 6].isWall = true;
 
             Nodes[7, 5].isWall = true;
             Nodes[7, 4].isWall = true;
-            Nodes[7, 3].isWall = true;
-            Nodes[7, 2].isWall = true;
-            Nodes[7, 1].isWall = true;
+        }
+        private void GenPoints(Position startingNode, Position endingNode)
+        {
+            Nodes[startingNode.X, startingNode.Y].SetCost(0, endingNode);
+            Nodes[startingNode.X, startingNode.Y].IsStartNode = true;
+            Nodes[endingNode.X, endingNode.Y].IsEndNode = true;
         }
 
         public List<Node> GetNodesAround(Position pos)

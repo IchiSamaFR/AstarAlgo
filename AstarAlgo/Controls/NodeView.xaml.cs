@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AstarAlgo.Class;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,16 @@ namespace AstarAlgo.Controls
     /// </summary>
     public partial class NodeView : UserControl
     {
+        public Position Pos;
+
         public NodeView()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow.instance.AddWall(Pos);
         }
     }
 }

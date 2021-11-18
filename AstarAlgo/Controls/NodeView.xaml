@@ -5,11 +5,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AstarAlgo.Controls"
              mc:Ignorable="d" 
-             Height="80" Width="80" HorizontalAlignment="Left" VerticalAlignment="Top">
+             Height="60" Width="60" HorizontalAlignment="Left" VerticalAlignment="Top">
     <Grid>
-        <Rectangle x:Name="background" Fill="#BBB"></Rectangle>
-        <TextBlock x:Name="Gvalue" HorizontalAlignment="Left" VerticalAlignment="Top">GValue</TextBlock>
-        <TextBlock x:Name="Hvalue" HorizontalAlignment="Right" VerticalAlignment="Top">HValue</TextBlock>
-        <TextBlock x:Name="Fvalue" HorizontalAlignment="Center" VerticalAlignment="Center">FValue</TextBlock>
+        <Button x:Name="background" Background="#BBB" Click="Button_Click" BorderThickness="0"></Button>
+        <TextBlock x:Name="Gvalue" HorizontalAlignment="Left" VerticalAlignment="Top"></TextBlock>
+        <TextBlock x:Name="Hvalue" HorizontalAlignment="Right" VerticalAlignment="Top"></TextBlock>
+        <TextBlock x:Name="Fvalue" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
     </Grid>
 </UserControl>

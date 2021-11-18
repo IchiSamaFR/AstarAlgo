@@ -8,19 +8,22 @@ namespace AstarAlgo.Class
 {
     public class Node
     {
-        public bool IsEnd;
-        public bool IsStart;
+        public PathFinder Path;
+
+        public bool IsEndNode; //Is the ending node
+        public bool IsStartNode; //Is the start node
+        public bool PathFound;
 
         public bool isWall;
-        public bool isEndPath;
         public bool isChecked;
+
         public Node Previous;
-        public PathFinder Path;
         public Position Pos;
-        public Position End;
-        public int Gcost = -1; //Distance from starting node
-        public int Hcost = -1; //Distance from ending node
-        public int Fcost { get => Gcost + Hcost; } //Distance from ending node
+        public Position EndNodePos;
+
+        public int Gcost = 0; //Distance from starting node
+        public int Hcost = 0; //Distance from ending node
+        public int Fcost { get => Gcost + Hcost; }
 
         public Node(Position pos, PathFinder path)
         {
@@ -34,37 +37,39 @@ namespace AstarAlgo.Class
             CheckAround();
         }
 
+        public void ResetValues()
+        {
+            Gcost = 0;
+            Hcost = 0;
+            isChecked = false;
+            PathFound = false;
+        }
+
         public void SetEndPath()
         {
-            isEndPath = true;
+            PathFound = true;
             if (Previous != null)
                 Previous.SetEndPath();
         }
 
         public void SetCost(int gcost, Position end)
         {
-            if (isWall)
-            {
-                Gcost = -1;
-                Hcost = -1;
-                return;
-            }
+            if (isWall) return;
 
             Gcost = gcost;
-            End = end;
+            EndNodePos = end;
 
-            if (IsEnd)
+            if (IsEndNode)
             {
                 Path.PathFind = true;
                 Previous.SetEndPath();
                 return;
             }
 
-
-            Hcost = CalcHcost(end);
+            Hcost = SumHcost(end);
         }
 
-        public int CalcHcost(Position end)
+        public int SumHcost(Position end)
         {
             int x = end.X - Pos.X >= 0 ? end.X - Pos.X : Pos.X - end.X;
             int y = end.Y - Pos.Y >= 0 ? end.Y - Pos.Y : Pos.Y - end.Y;
@@ -100,11 +105,11 @@ namespace AstarAlgo.Class
                 else
                     newGCost = Gcost + 10;
 
-                if (nodes[i].Gcost == -1 || nodes[i]?.Gcost > newGCost)
+                if (!nodes[i].IsStartNode && (nodes[i].Gcost <= 0 || nodes[i]?.Gcost > newGCost))
                 {
                     nodes[i].Previous = this;
-                    nodes[i].SetCost(newGCost, End);
-                    if (nodes[i].isEndPath) break;
+                    nodes[i].SetCost(newGCost, EndNodePos);
+                    if (nodes[i].PathFound) break;
                 }
             }
         }
