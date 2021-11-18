@@ -105,31 +105,34 @@ namespace AstarAlgo.Class
         {
             List<Node> nodes = new List<Node>();
 
-
-            /*
-            if(GetNode(pos.X + 1, pos.Y) != null)
-                nodes.Add(GetNode(pos.X + 1, pos.Y));
-            if (GetNode(pos.X - 1, pos.Y) != null)
-                nodes.Add(GetNode(pos.X - 1, pos.Y));
-
-            if (GetNode(pos.X, pos.Y + 1) != null)
-                nodes.Add(GetNode(pos.X, pos.Y + 1));
-            if (GetNode(pos.X, pos.Y - 1) != null)
-                nodes.Add(GetNode(pos.X, pos.Y - 1));
-            */
-
-            for (int x = pos.X - 1; x <= pos.X + 1; x++)
+            if (MainWindow.instance.IsDiagonal)
             {
-                for (int y = pos.Y - 1; y <= pos.Y + 1; y++)
+                for (int x = pos.X - 1; x <= pos.X + 1; x++)
                 {
-                    if (x != pos.X || y != pos.Y)
+                    for (int y = pos.Y - 1; y <= pos.Y + 1; y++)
                     {
-                        Node node = GetNode(x, y);
-                        if (node != null)
-                            nodes.Add(node);
+                        if (x != pos.X || y != pos.Y)
+                        {
+                            Node node = GetNode(x, y);
+                            if (node != null)
+                                nodes.Add(node);
+                        }
                     }
                 }
             }
+            else
+            {
+                if (GetNode(pos.X + 1, pos.Y) != null)
+                    nodes.Add(GetNode(pos.X + 1, pos.Y));
+                if (GetNode(pos.X - 1, pos.Y) != null)
+                    nodes.Add(GetNode(pos.X - 1, pos.Y));
+
+                if (GetNode(pos.X, pos.Y + 1) != null)
+                    nodes.Add(GetNode(pos.X, pos.Y + 1));
+                if (GetNode(pos.X, pos.Y - 1) != null)
+                    nodes.Add(GetNode(pos.X, pos.Y - 1));
+            }
+
 
             return nodes;
         }

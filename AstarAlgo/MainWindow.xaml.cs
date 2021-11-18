@@ -31,6 +31,7 @@ namespace AstarAlgo
         private DispatcherTimer timer = new DispatcherTimer();
 
         public bool ShowValues { get => showValues.IsChecked ?? false; }
+        public bool IsDiagonal { get => isDiagonal.IsChecked ?? false; }
         public bool Started;
 
         public MainWindow()
@@ -56,6 +57,12 @@ namespace AstarAlgo
                 pathFinder.SelectNextNode();
                 if (pathFinder.PathFind)
                     Started = false;
+
+                isDiagonal.IsEnabled = false;
+            }
+            else
+            {
+                isDiagonal.IsEnabled = true;
             }
         }
 
