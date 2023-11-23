@@ -1,0 +1,46 @@
+﻿<Window x:Class="AstarView.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AstarView"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="640">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid x:Name="menuView">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Margin="0 0 10 10">
+                <CheckBox x:Name="showValues" Content="Show values"/>
+                <CheckBox x:Name="isDiagonal" Content="Diagonal"/>
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock Text="Multiplier" Margin="0 0 10 0"/>
+                    <TextBox x:Name="multiplier" Text="1" Width="40"/>
+                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button Click="WallMultiplier_Click" Content="Wall"/>
+                    <Button Click="PathMultiplier_Click" Content="Path" Grid.Column="1"/>
+                </Grid>
+            </StackPanel>
+            <StackPanel Grid.Column="2">
+                <Button HorizontalAlignment="Right" Click="StartPath_Click" Content="Find path"/>
+            </StackPanel>
+        </Grid>
+        <Grid x:Name="gridView" Grid.Row="1">
+
+        </Grid>
+    </Grid>
+</Window>

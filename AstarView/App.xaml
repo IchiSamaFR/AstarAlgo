@@ -1,7 +1,7 @@
-﻿<Application x:Class="AstarAlgo.App"
+﻿<Application x:Class="AstarView.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:AstarAlgo"
+             xmlns:local="clr-namespace:AstarView"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

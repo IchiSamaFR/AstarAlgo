@@ -1,4 +1,4 @@
-﻿using AstarAlgo.Class;
+﻿using AstarLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AstarAlgo.Controls
+namespace AstarView.Controls
 {
     /// <summary>
     /// Logique d'interaction pour NodeView.xaml
@@ -30,7 +30,7 @@ namespace AstarAlgo.Controls
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.instance.AddWall(Pos);
+            MainWindow.instance.AddMultiplier(Pos);
         }
     }
 }

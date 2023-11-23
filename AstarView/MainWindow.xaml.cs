@@ -1,23 +1,11 @@
-﻿using AstarAlgo.Class;
-using AstarAlgo.Controls;
+﻿using AstarLibrary;
+using AstarView.Controls;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace AstarAlgo
+namespace AstarView
 {
     /// <summary>
     /// Logique d'interaction pour MainWindow.xaml
@@ -32,6 +20,7 @@ namespace AstarAlgo
 
         public bool ShowValues { get => showValues.IsChecked ?? false; }
         public bool IsDiagonal { get => isDiagonal.IsChecked ?? false; }
+
         public bool Started;
 
         public MainWindow()
@@ -45,7 +34,7 @@ namespace AstarAlgo
         {
             GenMap();
             timer.Tick += new EventHandler(Update);
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 10);
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 5);
             timer.Start();
         }
 
@@ -55,8 +44,10 @@ namespace AstarAlgo
             if (Started)
             {
                 pathFinder.SelectNextNode();
-                if (pathFinder.PathFind)
+                if (pathFinder.PathFinished)
+                {
                     Started = false;
+                }
 
                 isDiagonal.IsEnabled = false;
             }
@@ -87,48 +78,62 @@ namespace AstarAlgo
                 string line = string.Empty;
                 for (int x = 0; x < pathFinder.Width; x++)
                 {
+                    var node = Nodes[x, y];
+                    var pathnode = pathFinder.Nodes[x, pathFinder.Height - y - 1];
                     if (ShowValues)
                     {
-                        Nodes[x, y].Gvalue.Text = pathFinder.Nodes[x, pathFinder.Height - y - 1].Gcost.ToString();
-                        Nodes[x, y].Hvalue.Text = pathFinder.Nodes[x, pathFinder.Height - y - 1].Hcost.ToString();
-                        Nodes[x, y].Fvalue.Text = pathFinder.Nodes[x, pathFinder.Height - y - 1].Fcost.ToString();
+                        node.Gvalue.Text = pathnode.Gcost.ToString();
+                        node.Hvalue.Text = pathnode.Hcost.ToString();
+                        node.Fvalue.Text = pathnode.Fcost.ToString();
+                        node.Mvalue.Text = "x" + pathnode.Multiplier.ToString();
                     }
                     else
                     {
-                        Nodes[x, y].Gvalue.Text = "";
-                        Nodes[x, y].Hvalue.Text = "";
-                        Nodes[x, y].Fvalue.Text = "";
+                        node.Gvalue.Text = "";
+                        node.Hvalue.Text = "";
+                        node.Fvalue.Text = "";
+                        node.Mvalue.Text = "";
                     }
 
-                    if (pathFinder.Nodes[x, pathFinder.Height - y - 1].IsEndNode)
-                        Nodes[x, y].background.Background = (Brush)(new BrushConverter().ConvertFrom("#00F"));
-                    else if (pathFinder.Nodes[x, pathFinder.Height - y - 1].IsStartNode)
-                        Nodes[x, y].background.Background = (Brush)(new BrushConverter().ConvertFrom("#F00"));
-                    else if (pathFinder.Nodes[x, pathFinder.Height - y - 1].PathFound)
-                        Nodes[x, y].background.Background = (Brush)(new BrushConverter().ConvertFrom("#0F0"));
-                    else if (pathFinder.Nodes[x, pathFinder.Height - y - 1].isChecked)
-                        Nodes[x, y].background.Background = (Brush)(new BrushConverter().ConvertFrom("#DDD"));
-                    else if (pathFinder.Nodes[x, pathFinder.Height - y - 1].Gcost > 0)
-                        Nodes[x, y].background.Background = (Brush)(new BrushConverter().ConvertFrom("#AAA"));
-                    else if (pathFinder.Nodes[x, pathFinder.Height - y - 1].isWall)
-                        Nodes[x, y].background.Background = (Brush)(new BrushConverter().ConvertFrom("#000"));
+                    if (pathnode.IsEndNode)
+                        node.background.Background = (Brush)(new BrushConverter().ConvertFrom("#00F"));
+                    else if (pathnode.IsStartNode)
+                        node.background.Background = (Brush)(new BrushConverter().ConvertFrom("#F00"));
+                    else if (pathnode.PathFound)
+                        node.background.Background = (Brush)(new BrushConverter().ConvertFrom("#0F0"));
+                    else if (pathnode.IsChecked)
+                        node.background.Background = (Brush)(new BrushConverter().ConvertFrom("#DDD"));
+                    else if (pathnode.Gcost > 0)
+                        node.background.Background = (Brush)(new BrushConverter().ConvertFrom("#AAA"));
+                    else if (pathnode.IsWall)
+                        node.background.Background = (Brush)(new BrushConverter().ConvertFrom("#000"));
                     else
-                        Nodes[x, y].background.Background = (Brush)(new BrushConverter().ConvertFrom("#EEE"));
+                        node.background.Background = (Brush)(new BrushConverter().ConvertFrom("#EEE"));
                 }
             }
         }
 
-        public void AddWall(Position pos)
+        public void AddMultiplier(Position pos)
         {
-            if (Started) return;
+            if (Started || !float.TryParse(multiplier.Text.Replace(".", ","), out float mult)) return;
 
             pathFinder.Reset();
-            pathFinder.Nodes[pos.X, pathFinder.Height - pos.Y - 1].isWall = !pathFinder.Nodes[pos.X, pathFinder.Height - pos.Y - 1].isWall;
+            var node = pathFinder.GetNode(pos.X, pathFinder.Height - pos.Y - 1);
+            node.SetCostMultiplier(mult);
         }
         private void StartPath_Click(object sender, RoutedEventArgs e)
         {
             pathFinder.Reset();
+            pathFinder.IsDiagonal = IsDiagonal;
             Started = true;
+        }
+        private void WallMultiplier_Click(object sender, RoutedEventArgs e)
+        {
+            multiplier.Text = "0";
+        }
+        private void PathMultiplier_Click(object sender, RoutedEventArgs e)
+        {
+            multiplier.Text = "1";
         }
     }
 }

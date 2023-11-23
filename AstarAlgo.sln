@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.1525
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarAlgo", "AstarAlgo\AstarAlgo.csproj", "{9706EF8F-EBAD-4A81-A548-D9910E01DF36}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarLibrary", "AstarLibrary\AstarLibrary.csproj", "{34297EE5-D97C-4249-A8BF-F08D37CC6713}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AstarView", "AstarView\AstarView.csproj", "{12733C0D-2751-4F0C-BF44-0342CC2C48E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9706EF8F-EBAD-4A81-A548-D9910E01DF36}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9706EF8F-EBAD-4A81-A548-D9910E01DF36}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9706EF8F-EBAD-4A81-A548-D9910E01DF36}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9706EF8F-EBAD-4A81-A548-D9910E01DF36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34297EE5-D97C-4249-A8BF-F08D37CC6713}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34297EE5-D97C-4249-A8BF-F08D37CC6713}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34297EE5-D97C-4249-A8BF-F08D37CC6713}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34297EE5-D97C-4249-A8BF-F08D37CC6713}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12733C0D-2751-4F0C-BF44-0342CC2C48E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12733C0D-2751-4F0C-BF44-0342CC2C48E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12733C0D-2751-4F0C-BF44-0342CC2C48E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12733C0D-2751-4F0C-BF44-0342CC2C48E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
