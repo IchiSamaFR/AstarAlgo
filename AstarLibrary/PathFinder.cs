@@ -79,9 +79,9 @@ namespace AstarLibrary
             SetEndPos(end);
         }
 
-        public void SelectNextNode()
+        public Node SelectNextNode()
         {
-            if (PathFinished) return;
+            if (PathFinished) return null;
 
             Node nodeToSelect = null;
             foreach (var node in Nodes)
@@ -94,11 +94,36 @@ namespace AstarLibrary
             if (nodeToSelect != null)
             {
                 nodeToSelect.Select();
+                return nodeToSelect;
             }
             else
             {
                 PathFinished = true;
+                return null;
             }
+        }
+        public List<Node> SelectPath()
+        {
+            while(!PathFinished)
+            {
+                Node nodeToSelect = null;
+                foreach (var node in Nodes)
+                {
+                    if (!node.IsWall && !node.IsChecked && (nodeToSelect == null || node.Fcost < nodeToSelect.Fcost) && node.Fcost > 0)
+                    {
+                        nodeToSelect = node;
+                    }
+                }
+                if (nodeToSelect != null)
+                {
+                    nodeToSelect.Select();
+                }
+                else
+                {
+                    PathFinished = true;
+                }
+            }
+            return EndingNode.GetEndPath();
         }
 
         public void Reset()
@@ -111,7 +136,7 @@ namespace AstarLibrary
             SetStartPos(StartingPos);
             SetEndPos(EndingPos);
         }
-        public void GenNodes(int width, int height)
+        private void GenNodes(int width, int height)
         {
             Width = width;
             Height = height;
@@ -133,7 +158,7 @@ namespace AstarLibrary
                 node.NodesAround = GetNodesAround(node.Pos);
             }
         }
-        public void GenCosts(float[,] costs)
+        private void GenCosts(float[,] costs)
         {
             for (int x = 0; x < costs.GetLength(0); x++)
             {
@@ -147,7 +172,7 @@ namespace AstarLibrary
                 }
             }
         }
-        public void SetStartPos(Position startPos)
+        private void SetStartPos(Position startPos)
         {
             var node = GetNode(startPos.X, startPos.Y);
             if(node == null)
@@ -162,7 +187,7 @@ namespace AstarLibrary
             }
             node.IsStartNode = true;
         }
-        public void SetEndPos(Position endPos)
+        private void SetEndPos(Position endPos)
         {
             var node = GetNode(endPos.X, endPos.Y);
             if (node == null)
@@ -213,7 +238,7 @@ namespace AstarLibrary
 
             return nodes;
         }
-        public Node GetNode(int x, int y)
+        private Node GetNode(int x, int y)
         {
             if (x < 0 || x >= Width || y < 0 || y >= Height) return null;
 

@@ -78,12 +78,22 @@ namespace AstarLibrary
             PathFound = false;
         }
 
-        public void SetEndPath()
+        public List<Node> SetEndPath()
         {
+            var lst = new List<Node>();
             PathFound = true;
 
             if (Previous != null)
-                Previous.SetEndPath();
+                lst.AddRange(Previous.SetEndPath());
+            return lst;
+        }
+        public List<Node> GetEndPath()
+        {
+            var lst = new List<Node>();
+
+            if (Previous != null)
+                lst.AddRange(Previous.SetEndPath());
+            return lst;
         }
 
         public void SetCostMultiplier(float multiplier)
@@ -106,7 +116,7 @@ namespace AstarLibrary
             Hcost = SumHcost(end);
             return false;
         }
-        public float SumHcost(Position end)
+        private float SumHcost(Position end)
         {
             int x = end.X - Pos.X >= 0 ? end.X - Pos.X : Pos.X - end.X;
             int y = end.Y - Pos.Y >= 0 ? end.Y - Pos.Y : Pos.Y - end.Y;
@@ -125,7 +135,7 @@ namespace AstarLibrary
             return val;
         }
 
-        public void CheckAround()
+        private void CheckAround()
         {
             for (int i = 0; i < NodesAround.Count; i++)
             {
